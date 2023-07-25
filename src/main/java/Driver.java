@@ -1,19 +1,26 @@
-import org.cloud.tutorials.CSVReader;
-import org.cloud.tutorials.FormatContent;
-import org.cloud.tutorials.TextWriter;
-import org.cloud.tutorials.impl.CSVReaderImpl;
-import org.cloud.tutorials.impl.FormatContentImpl;
-import org.cloud.tutorials.impl.TextWriterImpl;
+import org.cloud.tutorials.graph.Grid;
+import org.cloud.tutorials.reader.CSVReader;
+import org.cloud.tutorials.writer.TextWriter;
+import org.cloud.tutorials.reader.impl.CSVReaderImpl;
+import org.cloud.tutorials.writer.impl.TextWriterImpl;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 public class Driver {
 
-    {
-        CSVReader csvReader = new CSVReaderImpl();
-        FormatContent formatContent = new FormatContentImpl();
-        TextWriter textWriter = new TextWriterImpl();
-    }
-    public static void main(String ... args) {
+    public static void main(String ... args) throws IOException {
+        String inputFilePath = args[0];
+        String outputFilePath = args[1];
 
+        // Map to CSV input to Graph
+        CSVReader csvReader = new CSVReaderImpl();
+        Grid grid = csvReader.mapToGraph(inputFilePath);
+        grid.calculate();
+
+        // output
+        TextWriter textWriter = new TextWriterImpl();
+        textWriter.writeGraphTotext(outputFilePath, grid);
     }
 
 }
