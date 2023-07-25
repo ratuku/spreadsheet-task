@@ -9,7 +9,7 @@ import java.io.IOException;
 
 public class TextWriterImpl implements TextWriter {
     @Override
-    public void writeGraphTotext(String outputFilePath, Grid grid) throws IOException {
+    public void writeGridToText(String outputFilePath, Grid grid) throws IOException {
         FileWriter myWriter = new FileWriter(outputFilePath);
 
         try {
@@ -19,9 +19,17 @@ public class TextWriterImpl implements TextWriter {
 
             for (int r = 0; r < row; r++) {
                 StringBuffer rowValues = new StringBuffer();
-                rowValues.append(nodes[r][0].value.input);
-                for (int c = 1; c < col; c++) {
-                    rowValues.append("|").append(nodes[r][c].value.input);
+                for (int c = 0; c < col; c++) {
+                    Node node = nodes[r][0];
+                    if (node == null) {
+                        rowValues.append("");
+                        continue;
+                    }
+                    if (c==0) {
+                        rowValues.append(node.getValue().getInput());
+                        continue;
+                    }
+                    rowValues.append("|").append(nodes[r][c].getValue().getInput());
                 }
                 myWriter.write(rowValues.toString());
             }

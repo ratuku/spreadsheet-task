@@ -13,7 +13,18 @@ import java.util.Scanner;
 
 public class CSVReaderImpl implements CSVReader {
 
-    public Grid mapToGraph(String inputFilePath) throws FileNotFoundException {
+    /**
+     *
+     * This implementation reads the CSV once and stores each row in a Map.
+     * This map is passed to Grid and used to populate Grid
+     * By going through the CSV here we will figure out the dimension of the grid row * col
+     * Since rows may have different column size, col here is the maximum column size.
+     *
+     * @param inputFilePath
+     * @return
+     * @throws FileNotFoundException
+     */
+    public Grid mapToGrid(String inputFilePath) throws FileNotFoundException {
         Scanner scanner = new Scanner(new File(inputFilePath)).useDelimiter(",");
 
         int row = 0;

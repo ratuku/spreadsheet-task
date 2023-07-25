@@ -16,12 +16,12 @@ public class Driver {
 
         // Map to CSV input to Graph
         CSVReader csvReader = new CSVReaderImpl();
-        Grid grid = csvReader.mapToGraph(inputFilePath);
+        Grid grid = csvReader.mapToGrid(inputFilePath);
         grid.calculate();
 
         // output
         TextWriter textWriter = new TextWriterImpl();
-        textWriter.writeGraphTotext(outputFilePath, grid);
+        textWriter.writeGridToText(outputFilePath, grid);
     }
 
 }
