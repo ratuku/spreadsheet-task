@@ -9,9 +9,10 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public class TextWriterImpl implements TextWriter {
+
     @Override
-    public void writeGridToText(String outputFilePath, Grid grid) throws IOException {
-        FileWriter myWriter = new FileWriter(outputFilePath);
+    public void writeGridToText(String outputFile, Grid grid) throws IOException {
+        FileWriter myWriter = new FileWriter(outputFile);
 
         try {
             Node[][] nodes = grid.getNodes();
@@ -20,54 +21,51 @@ public class TextWriterImpl implements TextWriter {
 
             for (int r = 0; r < row; r++) {
                 StringBuilder rowValues = new StringBuilder();
-                // for each cell in this row
                 for (int c = 0; c < col; c++) {
                     Node node = nodes[r][c];
                     StringBuilder cellValue = getCellOutput(node, grid.getColumnMaxWidth()[c]);
-                    if (c==0) {
+                    if (c == 0) {
                         rowValues.append(cellValue);
                     } else {
-                    rowValues.append("|").append(cellValue); }
+                        rowValues.append("|").append(cellValue);
+                    }
                 }
-                myWriter.write(rowValues.toString() + "\n");
+                myWriter.write(rowValues + "\n");
             }
             myWriter.close();
         } catch (IOException e) {
-            System.err.println("An error occurred.");
+            System.err.println("An error occurred while trying to write to the output file");
             e.printStackTrace();
             throw e;
         }
     }
 
-    // todo: finish this... damn load-shedding
+    /**
+     * This method returns the formatted output representation of the node
+     * This will be written on the output text file
+     *
+     * @param cell
+     * @param maxWidth
+     * @return
+     */
     private StringBuilder getCellOutput(Node cell, int maxWidth) {
         StringBuilder value;
         if (cell == null) {
             value = new StringBuilder();
-            for (int i = 0; i < maxWidth; i++) {
-                value.append(" ");
-            }
-        }
-        else if (cell.getType() == Type.STRING) {
+            value.append(" ".repeat(Math.max(0, maxWidth)));
+        } else if (cell.getType() == Type.STRING) {
             value = new StringBuilder(cell.getValue().getInput());
-            for (int i = 0; i < maxWidth - value.length(); i++) {
-                value.append(" ");
-            }
-        }
-        else if (cell.getValue().isCalculated()) {
+            int valueSize = value.length();
+            value.append(" ".repeat(Math.max(0, maxWidth - valueSize)));
+        } else if (cell.getValue().isCalculated()) {
             value = new StringBuilder(cell.getValue().getNumberResult().toString());
             StringBuilder dummy = new StringBuilder();
-            for (int i = 0; i < maxWidth - value.length(); i++) {
-                dummy.append(" ");
-            }
+            dummy.append(" ".repeat(Math.max(0, maxWidth - value.length())));
             value = dummy.append(value);
-        }
-        else {
+        } else {
             // must be type line
             value = new StringBuilder();
-            for (int i = 0; i < maxWidth; i++) {
-                value.append("_");
-            }
+            value.append("-".repeat(Math.max(0, maxWidth)));
         }
         return value;
     }

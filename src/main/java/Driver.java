@@ -9,17 +9,13 @@ import java.io.IOException;
 public class Driver {
 
     public static void main(String ... args) throws IOException {
-        // String inputFilePath = args[0];
-        // String outputFilePath = args[1];
-        String inputFilePath = "input.csv";
-        String outputFilePath = "output.txt";
+        String inputFilePath = args[0];
+        String outputFilePath = args[1];
 
-        // Map to CSV input to Graph
         CSVReader csvReader = new CSVReaderImpl();
         Grid grid = csvReader.mapToGrid(inputFilePath);
         grid.calculate();
 
-        // output
         TextWriter textWriter = new TextWriterImpl();
         textWriter.writeGridToText(outputFilePath, grid);
     }

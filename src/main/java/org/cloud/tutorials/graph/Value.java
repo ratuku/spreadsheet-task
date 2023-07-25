@@ -3,11 +3,10 @@ package org.cloud.tutorials.graph;
 public class Value {
 
     private String input;
-    private String stringResult;
     private Double numberResult;
     private boolean calculated;
 
-    public Value (String inputValue) {
+    public Value(String inputValue) {
         this.input = inputValue;
     }
 
@@ -20,7 +19,9 @@ public class Value {
     }
 
     /**
-     *  This property is only important for value of type prod or sum
+     * Have we calculated this value already?
+     * Not important for cells of type String or Line
+     *
      * @return
      */
     public Boolean isCalculated() {
@@ -40,7 +41,6 @@ public class Value {
     public String toString() {
         return "Value{" +
                 "input='" + input + '\'' +
-                ", stringResult='" + stringResult + '\'' +
                 ", numberResult=" + numberResult +
                 ", calculated=" + calculated +
                 '}';

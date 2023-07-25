@@ -1,8 +1,0 @@
-,,,
-Total:,#(sum C6 C7 C8) ,Sum test:,#(sum A6 B8)
-,,Prod test:,#(prod A6 A7 B6)
-#hl,#hl,#hl
-Values,Factor,,
-2,1.5,#(prod A6 B6),
-3,2,#(prod A7 B7),
-4.5,2.5,#(prod A8 B8),

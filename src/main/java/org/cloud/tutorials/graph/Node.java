@@ -1,6 +1,10 @@
 package org.cloud.tutorials.graph;
 
 
+/**
+ * This node class represents a cell in the CSV input file
+ *
+ */
 public class Node  {
     private Type type;
     private Value value;
