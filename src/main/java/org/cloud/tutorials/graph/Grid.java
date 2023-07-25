@@ -18,6 +18,7 @@ import static java.lang.Double.parseDouble;
 public class Grid {
 
     Node[][] nodes;
+
     int[] columnMaxWidth;
     boolean calculated;
     boolean populated;
@@ -33,6 +34,10 @@ public class Grid {
         return nodes;
     }
 
+    public int[] getColumnMaxWidth() {
+        return columnMaxWidth;
+    }
+
     public void populate(Map<Integer, String[]> map) {
         if (populated) return;
         int row = nodes.length;
@@ -43,15 +48,12 @@ public class Grid {
             if (rowValues.length == 0) continue;
             for (int c = 0; c < currentRowSize; c++) {
                 Node node = new Node(rowValues[c]);
-                System.out.print(" r: " + r + " c: " + c);
-                System.out.print(" value: " + node.getValue().getInput() + " type " + node.getType().name());
+                // System.out.print(" r: " + r + " c: " + c);
+                // System.out.print(" value: " + node.getValue().getInput() + " type " + node.getType().name());
                 columnMaxWidth[c] = Math.max(columnMaxWidth[c], node.getValue().getInput().length());
                 nodes[r][c] = node;
             }
             System.out.println();
-        }
-        for (int i = 0; i < columnMaxWidth.length; i++) {
-            System.out.println("col: " + i + " " + columnMaxWidth[i]);
         }
         populated = true;
     }
@@ -65,14 +67,15 @@ public class Grid {
             for (int c = 0; c < col; c++) {
                 if (nodes[r][c] == null) continue;
                 Node node = nodes[r][c];
-                System.out.println("Calculate cell " + r + "-" + c + " Input: " + node.getValue().getInput() +
-                        " cal:" + node.getValue().getNumberResult());
+/*                System.out.println("Calculate cell " + r + "-" + c + " Input: " + node.getValue().getInput() +
+                        " cal:" + node.getValue().getNumberResult());*/
                 if ((node.getType() == Type.PRODUCT || node.getType() == Type.SUM)
                         && !node.getValue().isCalculated()) {
                     calculateNode(node, c);
                 }
-                System.out.println("cell " + r + "-" + c + " Input: " + node.getValue().getInput() +
-                        " cal:" + node.getValue().getNumberResult());
+/*                System.out.println("cell " + r + "-" + c + " Input: " + node.getValue().getInput() +
+                        " cal:" + node.getValue().getNumberResult());*/
+                System.out.println("node >> " + node);
             }
             calculated = true;
         }
@@ -94,19 +97,18 @@ public class Grid {
         if (node.getType() == Type.PRODUCT) {
             calculateProduct(node, col);
         }
-        System.out.println("node >> " + node);
         columnMaxWidth[col] = Math.max(columnMaxWidth[col], node.getValue().getNumberResult().toString().length());
     }
 
     public void calculateSum(Node node, int col) {
-        System.out.println("calculateSum: " + node.getValue());
+        // System.out.println("calculateSum: " + node.getValue());
         double result = 0;
         String[] cells = node.getValue().getInput().split(" ");
         for (int i = 1; i < cells.length; i++) {
-            System.out.println("cell: " + cells[i]);
+            /// System.out.println("cell: " + cells[i]);
             int colIndex = (int) cells[i].charAt(0) - 65;
             int rowIndex =  Integer.parseInt(cells[i].substring(1, 2))-1;
-            System.out.println("rowIndex: " + rowIndex + " colIndex: " + colIndex);
+            // System.out.println("rowIndex: " + rowIndex + " colIndex: " + colIndex);
             Node _node = nodes[rowIndex][colIndex];
             if (_node.getType() != Type.NUMBER) {
                 calculateNode(_node, col); // here we are assuming prod or sum type
@@ -114,11 +116,10 @@ public class Grid {
             result += _node.getValue().getNumberResult();
         }
         node.getValue().setNumberResult(result);
-        System.out.println("result of prod: " + node.getValue());
     }
 
     public void calculateProduct(Node node, int col) {
-        System.out.println("calculateProduct: " + node.getValue());
+        // System.out.println("calculateProduct: " + node.getValue());
         double result = 1;
         String[] cells = node.getValue().getInput().split(" ");
         for (int i = 1; i < cells.length; i++) {
@@ -133,6 +134,6 @@ public class Grid {
             result *= _node.getValue().getNumberResult();
         }
         node.getValue().setNumberResult(result);
-        System.out.println("result of prod: " + node.getValue());
+        // System.out.println("result of prod: " + node.getValue());
     }
 }
