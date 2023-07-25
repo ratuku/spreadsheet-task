@@ -22,12 +22,12 @@ public class TextWriterImpl implements TextWriter {
                 StringBuilder rowValues = new StringBuilder();
                 // for each cell in this row
                 for (int c = 0; c < col; c++) {
-                    Node node = nodes[r][0];
+                    Node node = nodes[r][c];
                     StringBuilder cellValue = getCellOutput(node, grid.getColumnMaxWidth()[c]);
                     if (c==0) {
                         rowValues.append(cellValue);
-                    }
-                    rowValues.append("|").append(cellValue);
+                    } else {
+                    rowValues.append("|").append(cellValue); }
                 }
                 myWriter.write(rowValues.toString() + "\n");
             }
