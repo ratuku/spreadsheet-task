@@ -30,11 +30,15 @@ public class Grid {
         int col = nodes[0].length;
 
         for (int r = 0; r < row; r++) {
-            String[] rowValues = map.get(r);
+            String[] rowValues = map.get(r+1);
+            System.out.println("rowValues: " + rowValues.length);
             for (int c = 0; c < col; c++) {
                 Node node = new Node();
-                node.value.input = rowValues[c];
-                nodes[r][c] = node;
+                String inputValue = rowValues[c];
+                if (inputValue != null) {
+                    node.value.input = rowValues[c];
+                    nodes[r][c] = node;
+                }
             }
         }
 
