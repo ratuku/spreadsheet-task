@@ -12,7 +12,6 @@ import java.util.Scanner;
 
 public class CSVReaderImpl implements CSVReader {
 
-    @Override
     public Grid mapToGraph(String inputFilePath) throws FileNotFoundException {
         Scanner scanner = new Scanner(new File(inputFilePath)).useDelimiter(",");
 
