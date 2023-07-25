@@ -29,7 +29,7 @@ public class TextWriterImpl implements TextWriter {
                     }
                     rowValues.append("|").append(cellValue);
                 }
-                myWriter.write(rowValues.toString());
+                myWriter.write(rowValues.toString() + "\n");
             }
             myWriter.close();
         } catch (IOException e) {
@@ -42,7 +42,13 @@ public class TextWriterImpl implements TextWriter {
     // todo: finish this... damn load-shedding
     private StringBuilder getCellOutput(Node cell, int maxWidth) {
         StringBuilder value;
-        if (cell.getType() == Type.STRING) {
+        if (cell == null) {
+            value = new StringBuilder();
+            for (int i = 0; i < maxWidth; i++) {
+                value.append(" ");
+            }
+        }
+        else if (cell.getType() == Type.STRING) {
             value = new StringBuilder(cell.getValue().getInput());
             for (int i = 0; i < maxWidth - value.length(); i++) {
                 value.append(" ");
@@ -60,7 +66,7 @@ public class TextWriterImpl implements TextWriter {
             // must be type line
             value = new StringBuilder();
             for (int i = 0; i < maxWidth; i++) {
-                value.append(" ");
+                value.append("_");
             }
         }
         return value;
