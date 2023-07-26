@@ -1,0 +1,9 @@
+Values,Factor,
+#hl,#hl
+2,1.5,#(prod A3 B3)
+3,2,#(prod A4 B4)
+4.5,2.5,#(prod A5 B5)
+,,#hl
+,Total:,#(sum C3 C4 C5)
+Sum Test:,#(sum A3 B5)
+Prod test:,#(prod A3 A4 B3)

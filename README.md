@@ -7,6 +7,7 @@ It output file is a text file that contains the formatted output of the spreadsh
 ## Run the application
 
 ``
-mvn clean package
-java -cp target/spreadsheet-task-1.0.jar Driver input.csv output.txt
+- mvn clean install
+- mvn clean package
+- java -cp target/spreadsheet-task-1.0.jar Driver input.csv output.txt
 ``
