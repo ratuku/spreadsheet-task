@@ -51,17 +51,22 @@ public class Grid {
         if (populated) return;
         int row = nodes.length;
 
-        for (int r = 0; r < row; r++) {
-            String[] rowValues = map.get(r + 1);
-            int currentRowSize = rowValues.length;
-            if (rowValues.length == 0) continue;
-            for (int c = 0; c < currentRowSize; c++) {
-                Node node = new Node(rowValues[c]);
-                if (node.getType() != Type.SUM && node.getType() != Type.PRODUCT) {
-                    columnMaxWidth[c] = Math.max(columnMaxWidth[c], node.getValue().getInput().length());
+        try {
+            for (int r = 0; r < row; r++) {
+                String[] rowValues = map.get(r + 1);
+                int currentRowSize = rowValues.length;
+                if (rowValues.length == 0) continue;
+                for (int c = 0; c < currentRowSize; c++) {
+                    Node node = new Node(rowValues[c]);
+                    if (node.getType() != Type.SUM && node.getType() != Type.PRODUCT) {
+                        columnMaxWidth[c] = Math.max(columnMaxWidth[c], node.getValue().getInput().length());
+                    }
+                    nodes[r][c] = node;
                 }
-                nodes[r][c] = node;
             }
+        } catch (NumberFormatException e) {
+            System.err.println("[NumberFormatException] Cells are in an incorrect format. \nEnsure no spaces in front of '#' key for prod and sum cells.\n");
+            throw e;
         }
         populated = true;
     }
@@ -71,18 +76,22 @@ public class Grid {
      */
     public void calculate() {
         if (calculated) return;
-
-        for (Node[] rowNodes : nodes) {
-            int col = rowNodes.length;
-            for (int c = 0; c < col; c++) {
-                if (rowNodes[c] == null) continue;
-                Node node = rowNodes[c];
-                if ((node.getType() == Type.PRODUCT || node.getType() == Type.SUM)
-                        && !node.getValue().isCalculated()) {
-                    calculateNode(node, c);
+        try {
+            for (Node[] rowNodes : nodes) {
+                int col = rowNodes.length;
+                for (int c = 0; c < col; c++) {
+                    if (rowNodes[c] == null) continue;
+                    Node node = rowNodes[c];
+                    if ((node.getType() == Type.PRODUCT || node.getType() == Type.SUM)
+                            && !node.getValue().isCalculated()) {
+                        calculateNode(node, c);
+                    }
                 }
+                calculated = true;
             }
-            calculated = true;
+        } catch (IndexOutOfBoundsException e) {
+            System.err.println("Index out of bounds. Please check that Prod and Sum cells depends on valid indices");
+            throw e;
         }
     }
 
@@ -138,7 +147,6 @@ public class Grid {
         double result = 1;
         String[] cells = node.getValue().getInput().split(" ");
         for (int i = 1; i < cells.length; i++) {
-            System.out.println("cell: " + cells[i]);
             result *= getNode(cells[i], col).getValue().getNumberResult();
         }
         node.getValue().setNumberResult(result);
@@ -160,7 +168,7 @@ public class Grid {
         int rowIndex =  Integer.parseInt(cell.substring(1, 2))-1;
         Node _node = nodes[rowIndex][colIndex];
         if (_node.getType() != Type.NUMBER) {
-            calculateNode(_node, col); // here we are assuming type prod or sum
+            calculateNode(_node, col); // here we are assuming type Prod or Sum
         }
         return _node;
     }
