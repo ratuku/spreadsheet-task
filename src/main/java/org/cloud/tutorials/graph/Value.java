@@ -2,7 +2,7 @@ package org.cloud.tutorials.graph;
 
 public class Value {
 
-    private String input;
+    private final String input;
     private Double numberResult;
     private boolean calculated;
 
@@ -22,14 +22,9 @@ public class Value {
      * Have we calculated this value already?
      * Not important for cells of type String or Line
      *
-     * @return
      */
     public Boolean isCalculated() {
         return calculated;
-    }
-
-    public void setInput(String input) {
-        this.input = input;
     }
 
     public void setNumberResult(Double numberResult) {

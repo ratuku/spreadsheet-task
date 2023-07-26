@@ -16,13 +16,12 @@ public class TextWriterImpl implements TextWriter {
 
         try {
             Node[][] nodes = grid.getNodes();
-            int row = nodes.length;
             int col = nodes[0].length;
 
-            for (int r = 0; r < row; r++) {
+            for (Node[] rowNodes : nodes) {
                 StringBuilder rowValues = new StringBuilder();
                 for (int c = 0; c < col; c++) {
-                    Node node = nodes[r][c];
+                    Node node = rowNodes[c];
                     StringBuilder cellValue = getCellOutput(node, grid.getColumnMaxWidth()[c]);
                     if (c == 0) {
                         rowValues.append(cellValue);
@@ -44,9 +43,6 @@ public class TextWriterImpl implements TextWriter {
      * This method returns the formatted output representation of the node
      * This will be written on the output text file
      *
-     * @param cell
-     * @param maxWidth
-     * @return
      */
     private StringBuilder getCellOutput(Node cell, int maxWidth) {
         StringBuilder value;

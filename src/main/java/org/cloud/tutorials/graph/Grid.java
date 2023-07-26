@@ -99,8 +99,6 @@ public class Grid {
      * This method calculates the result of the Sum or Prod cell
      * This function throws a {@link RuntimeException} when there's cyclical dependency, aka
      * infinite loop. It also throws an exception when the dependent cell is of type Line or String.
-     * @param node
-     * @param col
      */
     public void calculateNode(Node node, int col) {
         if (node.getType() == Type.STRING || node.getType() == Type.LINE) {
@@ -124,8 +122,6 @@ public class Grid {
      * This method performs the sum operation of this cell
      * And sets the result to the numberResult attribute
      *
-     * @param node
-     * @param col
      */
     public void calculateSum(Node node, int col) {
         double result = 0;
@@ -140,8 +136,6 @@ public class Grid {
      * This method performs the prod operation of this node
      * And sets the result to the numberResult attribute
      *
-     * @param node
-     * @param col
      */
     public void calculateProduct(Node node, int col) {
         double result = 1;

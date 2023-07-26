@@ -18,9 +18,6 @@ public class CSVReaderImpl implements CSVReader {
      * By going through the CSV here we will figure out the dimension of the grid row * col
      * Since each rows may have different number of columns, col here is the maximum number of columns found per row
      *
-     * @param inputFilePath
-     * @return
-     * @throws FileNotFoundException
      */
     public Grid mapToGrid(String inputFilePath) throws FileNotFoundException {
         Scanner scanner = new Scanner(new File(inputFilePath)).useDelimiter(",");
